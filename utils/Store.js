@@ -71,3 +71,4 @@ export function StoreProvider({ children }) {
   const value = { state, dispatch };
   return <Store.Provider value={value}>{children}</Store.Provider>;
 }
+// comments
