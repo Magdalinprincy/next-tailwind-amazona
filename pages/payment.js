@@ -74,4 +74,3 @@ export default function PaymentScreen() {
   );
 }
 PaymentScreen.auth = true;
-// comments

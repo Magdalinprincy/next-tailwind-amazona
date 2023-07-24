@@ -36,5 +36,6 @@ function convertDocToObj(doc) {
   doc.updatedAt = doc.updatedAt.toString();
   return doc;
 }
+
 const db = { connect, disconnect, convertDocToObj };
 export default db;
