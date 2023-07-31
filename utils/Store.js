@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react';
 import Cookies from 'js-cookie';
-
+import React from 'react';
 export const Store = createContext();
 
 const initialState = {

@@ -8,6 +8,8 @@ import { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
+import React from 'react';
+
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
