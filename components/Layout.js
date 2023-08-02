@@ -8,6 +8,8 @@ import { Menu } from '@headlessui/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
+import { useRouter } from 'next/router';
+import { SearchIcon } from '@heroicons/react/outline';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -22,12 +24,21 @@ export default function Layout({ title, children }) {
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/login' });
   };
+
+  const [query, setQuery] = useState('');
+
+  const router = useRouter();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/search?query=${query}`);
+  };
+
   return (
     <>
       <Head>
         <title>{title ? title + ' - Amazona' : 'Amazona'}</title>
         <meta name="description" content="Ecommerce Website" />
-        <link rel="icon" href="/favicon.ico" />
+        <link legacyBehavior rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-screen flex-col justify-between ">
@@ -36,13 +47,31 @@ export default function Layout({ title, children }) {
             <Link legacyBehavior href="/">
               <a className="text-lg font-bold">amazona</a>
             </Link>
+            <form
+              onSubmit={submitHandler}
+              className="mx-auto  hidden w-full justify-center md:flex"
+            >
+              <input
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                placeholder="Search products"
+              />
+              <button
+                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                type="submit"
+                id="button-addon2"
+              >
+                <SearchIcon className="h-5 w-5"></SearchIcon>
+              </button>
+            </form>
             <div>
               <Link legacyBehavior href="/cart">
                 <a className="p-2">
                   Cart
                   {cartItemsCount > 0 && (
                     <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      {cartItemsCount}
                     </span>
                   )}
                 </a>
