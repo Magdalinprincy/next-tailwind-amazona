@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-
 const data = {
   users: [
     {
@@ -94,5 +93,4 @@ const data = {
     },
   ],
 };
-
 export default data;
