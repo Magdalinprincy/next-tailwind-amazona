@@ -1,3 +1,19 @@
+# Build Nextjs ECommerce Website Like Amazon
+
+- Tech: Nextjs 13, Next Auth 4
+- UI: Tailwind, chart.js, react-chartjs
+- DB: MongoDB, Mongoose
+- Payment: PayPal
+- Content Hosting: cloudinary
+- Deploy: Github, Vercel
+
+![next amazona](/public/app.jpg)
+
+Build ECommerce Website Like Amazon by Next.js
+
+- Source Code : https://github.com/Magdalinprincy/next-tailwind-amazona
+- Demo Website : https://next-tailwind-amazona-gules.vercel.app/
+
 ## Lessons
 
 1. Introduction
