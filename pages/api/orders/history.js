@@ -7,11 +7,9 @@ const handler = async (req, res) => {
   if (!user) {
     return res.status(401).send({ message: 'signin required' });
   }
-
   await db.connect();
   const orders = await Order.find({ user: user._id });
   await db.disconnect();
   res.send(orders);
 };
-
 export default handler;

@@ -8,7 +8,6 @@ import Layout from '../../components/Layout';
 import Product from '../../models/Product';
 import db from '../../utils/db';
 import { Store } from '../../utils/Store';
-
 export default function ProductScreen(props) {
   const { product } = props;
   const { state, dispatch } = useContext(Store);
@@ -20,11 +19,9 @@ export default function ProductScreen(props) {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
-
     if (data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
     }
-
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
     router.push('/cart');
   };
@@ -40,7 +37,11 @@ export default function ProductScreen(props) {
             alt={product.name}
             width={640}
             height={640}
-            layout="responsive"
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
           ></Image>
         </div>
         <div>
@@ -78,11 +79,9 @@ export default function ProductScreen(props) {
     </Layout>
   );
 }
-
 export async function getServerSideProps(context) {
   const { params } = context;
   const { slug } = params;
-
   await db.connect();
   const product = await Product.findOne({ slug }).lean();
   await db.disconnect();

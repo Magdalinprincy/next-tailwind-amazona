@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/Layout';
 import { getError } from '../../../utils/error';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -21,7 +20,6 @@ function reducer(state, action) {
       return { ...state, loadingUpdate: false, errorUpdate: '' };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false, errorUpdate: action.payload };
-
     case 'UPLOAD_REQUEST':
       return { ...state, loadingUpload: true, errorUpload: '' };
     case 'UPLOAD_SUCCESS':
@@ -44,14 +42,12 @@ export default function AdminProductEditScreen() {
       loading: true,
       error: '',
     });
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
   } = useForm();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,12 +66,9 @@ export default function AdminProductEditScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
     fetchData();
   }, [productId, setValue]);
-
   const router = useRouter();
-
   const uploadHandler = async (e, imageField = 'image') => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
@@ -83,7 +76,6 @@ export default function AdminProductEditScreen() {
       const {
         data: { signature, timestamp },
       } = await axios('/api/admin/cloudinary-sign');
-
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append('file', file);
@@ -99,7 +91,6 @@ export default function AdminProductEditScreen() {
       toast.error(getError(err));
     }
   };
-
   const submitHandler = async ({
     name,
     slug,
@@ -130,7 +121,6 @@ export default function AdminProductEditScreen() {
       toast.error(getError(err));
     }
   };
-
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -143,8 +133,8 @@ export default function AdminProductEditScreen() {
               <Link href="/admin/orders">Orders</Link>
             </li>
             <li>
-              <Link href="/admin/products">
-                <a className="font-bold">Products</a>
+              <Link href="/admin/products" className="font-bold">
+                Products
               </Link>
             </li>
             <li>
@@ -228,7 +218,6 @@ export default function AdminProductEditScreen() {
                   id="imageFile"
                   onChange={uploadHandler}
                 />
-
                 {loadingUpload && <div>Uploading....</div>}
               </div>
               <div className="mb-4">
@@ -306,5 +295,4 @@ export default function AdminProductEditScreen() {
     </Layout>
   );
 }
-
 AdminProductEditScreen.auth = { adminOnly: true };

@@ -4,13 +4,11 @@ import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
-import { XCircleIcon } from '@heroicons/react/outline';
+import XCircleIcon from '@heroicons/react/24/outline/XCircleIcon';
 import ProductItem from '../components/ProductItem';
 import Product from '../models/Product';
 import db from '../utils/db';
-
 const PAGE_SIZE = 2;
-
 const prices = [
   {
     name: '$1 to $50',
@@ -25,12 +23,9 @@ const prices = [
     value: '201-1000',
   },
 ];
-
 const ratings = [1, 2, 3, 4, 5];
-
 export default function Search(props) {
   const router = useRouter();
-
   const {
     query = 'all',
     category = 'all',
@@ -40,9 +35,7 @@ export default function Search(props) {
     sort = 'featured',
     page = 1,
   } = router.query;
-
   const { products, countProducts, categories, brands, pages } = props;
-
   const filterSearch = ({
     page,
     category,
@@ -64,7 +57,6 @@ export default function Search(props) {
     if (rating) query.rating = rating;
     if (min) query.min ? query.min : query.min === 0 ? 0 : min;
     if (max) query.max ? query.max : query.max === 0 ? 0 : max;
-
     router.push({
       pathname: router.pathname,
       query: query,
@@ -88,7 +80,6 @@ export default function Search(props) {
   const ratingHandler = (e) => {
     filterSearch({ rating: e.target.value });
   };
-
   const { state, dispatch } = useContext(Store);
   const addToCartHandler = async (product) => {
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
@@ -220,7 +211,6 @@ export default function Search(props) {
     </Layout>
   );
 }
-
 export async function getServerSideProps({ query }) {
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = query.page || 1;
@@ -230,7 +220,6 @@ export async function getServerSideProps({ query }) {
   const rating = query.rating || '';
   const sort = query.sort || '';
   const searchQuery = query.query || '';
-
   const queryFilter =
     searchQuery && searchQuery !== 'all'
       ? {
@@ -272,7 +261,6 @@ export async function getServerSideProps({ query }) {
       : sort === 'newest'
       ? { createdAt: -1 }
       : { _id: -1 };
-
   await db.connect();
   const categories = await Product.find().distinct('category');
   const brands = await Product.find().distinct('brand');
@@ -290,7 +278,6 @@ export async function getServerSideProps({ query }) {
     .skip(pageSize * (page - 1))
     .limit(pageSize)
     .lean();
-
   const countProducts = await Product.countDocuments({
     ...queryFilter,
     ...categoryFilter,
@@ -298,10 +285,8 @@ export async function getServerSideProps({ query }) {
     ...brandFilter,
     ...ratingFilter,
   });
-
   await db.disconnect();
   const products = productDocs.map(db.convertDocToObj);
-
   return {
     props: {
       products,

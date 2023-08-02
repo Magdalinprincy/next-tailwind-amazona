@@ -8,8 +8,6 @@ import { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-import React from 'react';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -209,10 +207,8 @@ function OrderScreen() {
                     <tr key={item._id} className="border-b">
                       <td>
                         <Link
-                          legacyBehavior
                           href={`/product/${item.slug}`}
                           className="flex items-center"
-                          passHref
                         >
                           <Image
                             src={item.image}

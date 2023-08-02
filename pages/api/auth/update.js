@@ -1,7 +1,7 @@
-import { getToken } from 'next-auth/jwt';
 import bcryptjs from 'bcryptjs';
 import User from '../../../models/User';
 import db from '../../../utils/db';
+import { getToken } from 'next-auth/jwt';
 
 async function handler(req, res) {
   if (req.method !== 'PUT') {
@@ -26,21 +26,17 @@ async function handler(req, res) {
     });
     return;
   }
-
   await db.connect();
   const toUpdateUser = await User.findById(user._id);
   toUpdateUser.name = name;
   toUpdateUser.email = email;
-
   if (password) {
     toUpdateUser.password = bcryptjs.hashSync(password);
   }
-
   await toUpdateUser.save();
   await db.disconnect();
   res.send({
     message: 'User updated',
   });
 }
-
 export default handler;

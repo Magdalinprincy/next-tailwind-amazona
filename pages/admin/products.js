@@ -5,7 +5,6 @@ import React, { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -34,7 +33,6 @@ function reducer(state, action) {
 }
 export default function AdminProdcutsScreen() {
   const router = useRouter();
-
   const [
     { loading, error, products, loadingCreate, successDelete, loadingDelete },
     dispatch,
@@ -43,7 +41,6 @@ export default function AdminProdcutsScreen() {
     products: [],
     error: '',
   });
-
   const createHandler = async () => {
     if (!window.confirm('Are you sure?')) {
       return;
@@ -69,14 +66,12 @@ export default function AdminProdcutsScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
     if (successDelete) {
       dispatch({ type: 'DELETE_RESET' });
     } else {
       fetchData();
     }
   }, [successDelete]);
-
   const deleteHandler = async (productId) => {
     if (!window.confirm('Are you sure?')) {
       return;
@@ -103,8 +98,8 @@ export default function AdminProdcutsScreen() {
               <Link href="/admin/orders">Orders</Link>
             </li>
             <li>
-              <Link href="/admin/products">
-                <a className="font-bold">Products</a>
+              <Link href="/admin/products" className="font-bold">
+                Products
               </Link>
             </li>
             <li>
@@ -152,10 +147,12 @@ export default function AdminProdcutsScreen() {
                       <td className=" p-5 ">{product.countInStock}</td>
                       <td className=" p-5 ">{product.rating}</td>
                       <td className=" p-5 ">
-                        <Link href={`/admin/product/${product._id}`}>
-                          <a type="button" className="default-button">
-                            Edit
-                          </a>
+                        <Link
+                          href={`/admin/product/${product._id}`}
+                          type="button"
+                          className="default-button"
+                        >
+                          Edit
                         </Link>
                         &nbsp;
                         <button
@@ -177,5 +174,4 @@ export default function AdminProdcutsScreen() {
     </Layout>
   );
 }
-
 AdminProdcutsScreen.auth = { adminOnly: true };

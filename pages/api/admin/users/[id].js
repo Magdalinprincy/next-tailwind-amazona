@@ -14,7 +14,6 @@ const handler = async (req, res) => {
     return res.status(400).send({ message: 'Method not allowed' });
   }
 };
-
 const deleteHandler = async (req, res) => {
   await db.connect();
   const user = await User.findById(req.query.id);
@@ -30,5 +29,4 @@ const deleteHandler = async (req, res) => {
     res.status(404).send({ message: 'User Not Found' });
   }
 };
-
 export default handler;

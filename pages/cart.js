@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react';
-import { XCircleIcon } from '@heroicons/react/outline';
+import XCircleIcon from '@heroicons/react/24/outline/XCircleIcon';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -32,10 +31,7 @@ function CartScreen() {
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty.{' '}
-          <Link legacyBehavior href="/">
-            Go shopping
-          </Link>
+          Cart is empty. <Link href="/">Go shopping</Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
@@ -53,17 +49,21 @@ function CartScreen() {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link legacyBehavior href={`/product/${item.slug}`}>
-                        <a className="flex items-center">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            width={50}
-                            height={50}
-                          ></Image>
-                          &nbsp;
-                          {item.name}
-                        </a>
+                      <Link
+                        href={`/product/${item.slug}`}
+                        className="flex items-center"
+                      >
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={50}
+                          height={50}
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
+                        ></Image>
+                        {item.name}
                       </Link>
                     </td>
                     <td className="p-5 text-right">
@@ -114,5 +114,4 @@ function CartScreen() {
     </Layout>
   );
 }
-
 export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });

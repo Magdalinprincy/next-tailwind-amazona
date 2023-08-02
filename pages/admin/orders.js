@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React, { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -16,14 +15,12 @@ function reducer(state, action) {
       state;
   }
 }
-
 export default function AdminOrderScreen() {
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     orders: [],
     error: '',
   });
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,7 +33,6 @@ export default function AdminOrderScreen() {
     };
     fetchData();
   }, []);
-
   return (
     <Layout title="Admin Dashboard">
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -46,8 +42,8 @@ export default function AdminOrderScreen() {
               <Link href="/admin/dashboard">Dashboard</Link>
             </li>
             <li>
-              <Link href="/admin/orders">
-                <a className="font-bold">Orders</a>
+              <Link href="/admin/orders" className="font-bold">
+                Orders
               </Link>
             </li>
             <li>
@@ -60,7 +56,6 @@ export default function AdminOrderScreen() {
         </div>
         <div className="overflow-x-auto md:col-span-3">
           <h1 className="mb-4 text-xl">Admin Orders</h1>
-
           {loading ? (
             <div>Loading...</div>
           ) : error ? (
@@ -102,7 +97,7 @@ export default function AdminOrderScreen() {
                       </td>
                       <td className="p-5">
                         <Link href={`/order/${order._id}`} passHref>
-                          <a>Details</a>
+                          Details
                         </Link>
                       </td>
                     </tr>
@@ -116,5 +111,4 @@ export default function AdminOrderScreen() {
     </Layout>
   );
 }
-
 AdminOrderScreen.auth = { adminOnly: true };

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { Bar } from 'react-chartjs-2';
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +13,6 @@ import {
 import React, { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,7 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 export const options = {
   responsive: true,
   plugins: {
@@ -32,7 +29,6 @@ export const options = {
     },
   },
 };
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -51,7 +47,6 @@ function AdminDashboardScreen() {
     summary: { salesData: [] },
     error: '',
   });
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,10 +57,8 @@ function AdminDashboardScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
     fetchData();
   }, []);
-
   const data = {
     labels: summary.salesData.map((x) => x._id), // 2022/01 2022/03
     datasets: [
@@ -82,8 +75,8 @@ function AdminDashboardScreen() {
         <div>
           <ul>
             <li>
-              <Link href="/admin/dashboard">
-                <a className="font-bold">Dashboard</a>
+              <Link href="/admin/dashboard" className="font-bold">
+                Dashboard
               </Link>
             </li>
             <li>
@@ -141,6 +134,5 @@ function AdminDashboardScreen() {
     </Layout>
   );
 }
-
 AdminDashboardScreen.auth = { adminOnly: true };
 export default AdminDashboardScreen;

@@ -16,5 +16,4 @@ const handler = async (req, res) => {
     return res.status(400).send({ message: 'Method not allowed' });
   }
 };
-
 export default handler;

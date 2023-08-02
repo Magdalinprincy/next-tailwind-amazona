@@ -5,10 +5,8 @@ import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import axios from 'axios';
 import Layout from '../components/Layout';
-
 export default function ProfileScreen() {
   const { data: session } = useSession();
-
   const {
     handleSubmit,
     register,
@@ -16,12 +14,10 @@ export default function ProfileScreen() {
     setValue,
     formState: { errors },
   } = useForm();
-
   useEffect(() => {
     setValue('name', session.user.name);
     setValue('email', session.user.email);
   }, [session.user, setValue]);
-
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.put('/api/auth/update', {
@@ -42,7 +38,6 @@ export default function ProfileScreen() {
       toast.error(getError(err));
     }
   };
-
   return (
     <Layout title="Profile">
       <form
@@ -50,7 +45,6 @@ export default function ProfileScreen() {
         onSubmit={handleSubmit(submitHandler)}
       >
         <h1 className="mb-4 text-xl">Update Profile</h1>
-
         <div className="mb-4">
           <label htmlFor="name">Name</label>
           <input
@@ -66,7 +60,6 @@ export default function ProfileScreen() {
             <div className="text-red-500">{errors.name.message}</div>
           )}
         </div>
-
         <div className="mb-4">
           <label htmlFor="email">Email</label>
           <input
@@ -134,5 +127,4 @@ export default function ProfileScreen() {
     </Layout>
   );
 }
-
 ProfileScreen.auth = true;

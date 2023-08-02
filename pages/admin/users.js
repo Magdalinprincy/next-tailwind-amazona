@@ -4,7 +4,6 @@ import React, { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -13,7 +12,6 @@ function reducer(state, action) {
       return { ...state, loading: false, users: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-
     case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true };
     case 'DELETE_SUCCESS':
@@ -26,7 +24,6 @@ function reducer(state, action) {
       return state;
   }
 }
-
 function AdminUsersScreen() {
   const [{ loading, error, users, successDelete, loadingDelete }, dispatch] =
     useReducer(reducer, {
@@ -34,7 +31,6 @@ function AdminUsersScreen() {
       users: [],
       error: '',
     });
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +47,6 @@ function AdminUsersScreen() {
       fetchData();
     }
   }, [successDelete]);
-
   const deleteHandler = async (userId) => {
     if (!window.confirm('Are you sure?')) {
       return;
@@ -66,7 +61,6 @@ function AdminUsersScreen() {
       toast.error(getError(err));
     }
   };
-
   return (
     <Layout title="Users">
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -82,8 +76,8 @@ function AdminUsersScreen() {
               <Link href="/admin/products">Products</Link>
             </li>
             <li>
-              <Link href="/admin/users">
-                <a className="font-bold">Users</a>
+              <Link href="/admin/users" className="font-bold">
+                Users
               </Link>
             </li>
           </ul>
@@ -115,10 +109,13 @@ function AdminUsersScreen() {
                       <td className=" p-5 ">{user.email}</td>
                       <td className=" p-5 ">{user.isAdmin ? 'YES' : 'NO'}</td>
                       <td className=" p-5 ">
-                        <Link href={`/admin/user/${user._id}`} passHref>
-                          <a type="button" className="default-button">
-                            Edit
-                          </a>
+                        <Link
+                          href={`/admin/user/${user._id}`}
+                          passHref
+                          type="button"
+                          className="default-button"
+                        >
+                          Edit
                         </Link>
                         &nbsp;
                         <button
@@ -140,6 +137,5 @@ function AdminUsersScreen() {
     </Layout>
   );
 }
-
 AdminUsersScreen.auth = { adminOnly: true };
 export default AdminUsersScreen;

@@ -23,5 +23,4 @@ const handler = async (req, res) => {
     res.status(404).send({ message: 'Error: order not found' });
   }
 };
-
 export default handler;
