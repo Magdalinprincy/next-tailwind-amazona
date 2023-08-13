@@ -49,14 +49,48 @@ export default function ProductScreen(props) {
             <li>
               <h1 className="text-lg">{product.name}</h1>
             </li>
-            <li>Category: {product.category}</li>
-            <li>Brand: {product.brand}</li>
-            <li>
-              {product.rating} of {product.numReviews} reviews
+            <li className="mt-2">
+              <span className="font-semibold">Category:</span>{' '}
+              <span>{product.category}</span>
             </li>
-            <li>Description: {product.description}</li>
+            <li className="mt-1">
+              <span className="font-semibold">Brand:</span>{' '}
+              <span>{product.brand}</span>
+            </li>
+
+            <li className="mt-1">
+              <div className="flex items-center">
+                <span className="text-black-500 font-semibold">Rating:</span>
+                <div className="flex ml-1">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <svg
+                      key={index}
+                      className={`h-4 w-4 fill-current ${
+                        index < Math.floor(product.rating)
+                          ? 'text-yellow-500'
+                          : 'text-gray-400'
+                      }`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 1l2.39 6.44h6.07l-4.92 4.48 1.88 6.12L10 14.64l-6.42 3.4 1.89-6.12L1.54 7.44h6.08z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="ml-1 text-gray-500">
+                  ({product.numReviews} reviews)
+                </span>
+              </div>
+            </li>
+            <li className="mt-1">
+              <p className="text-sm">
+                <span className="font-semibold">Description: </span>
+                {product.description}
+              </p>
+            </li>
           </ul>
         </div>
+
         <div>
           <div className="card p-5">
             <div className="mb-2 flex justify-between">

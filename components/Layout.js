@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
 import { useRouter } from 'next/router';
+import ShoppingCartIcon from '@heroicons/react/24/outline/ShoppingCartIcon';
+import UserCircleIcon from '@heroicons/react/24/outline/UserCircleIcon';
 import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 
 export default function Layout({ title, children }) {
@@ -19,17 +21,21 @@ export default function Layout({ title, children }) {
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
+
   const logoutClickHandler = () => {
     Cookies.remove('cart');
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/login' });
   };
+
   const [query, setQuery] = useState('');
   const router = useRouter();
+
   const submitHandler = (e) => {
     e.preventDefault();
     router.push(`/search?query=${query}`);
   };
+
   return (
     <>
       <Head>
@@ -41,8 +47,8 @@ export default function Layout({ title, children }) {
       <div className="flex min-h-screen flex-col justify-between ">
         <header>
           <nav className="flex h-12 items-center px-4 justify-between shadow-md">
-            <Link href="/" className="text-lg font-bold">
-              amazona
+            <Link href="/" className="text-lg font-bold italic">
+              Shoppe
             </Link>
             <form
               onSubmit={submitHandler}
@@ -51,7 +57,7 @@ export default function Layout({ title, children }) {
               <input
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
-                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0 ml-16"
                 placeholder="Search products"
               />
               <button
@@ -63,7 +69,9 @@ export default function Layout({ title, children }) {
               </button>
             </form>
             <div className="flex items-center z-10">
-              <Link href="/cart" className="p-2">
+              <Link href="/cart" className="p-10 flex items-center">
+                {' '}
+                <ShoppingCartIcon className="h-5 w-6" />
                 Cart
                 {cartItemsCount > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
@@ -76,7 +84,8 @@ export default function Layout({ title, children }) {
                 'Loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
+                  <Menu.Button className="text-blue-600 flex items-center space-x-1 ">
+                    <UserCircleIcon className="h-6 w-6" />
                     {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
@@ -115,8 +124,9 @@ export default function Layout({ title, children }) {
                   </Menu.Items>
                 </Menu>
               ) : (
-                <Link href="/login" className="p-2">
-                  Login
+                <Link href="/login" className="p-2 flex items-center space-x-1">
+                  <UserCircleIcon className="h-6 w-6" />
+                  <span>Login</span>
                 </Link>
               )}
             </div>
